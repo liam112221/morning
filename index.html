@@ -21,6 +21,8 @@
             <div id="sun" class="text-6xl absolute left-1/2 transform -translate-x-1/2 cursor-pointer">🌞</div>
         </div>
         
+        <div id="jump-message" class="text-pink-600 mb-2 h-6 text-sm"></div>
+        
         <h1 class="text-3xl font-bold text-yellow-600 mb-4">Selamat Pagi, IJA!</h1>
 
         <p class="text-base text-gray-700 mb-6">
@@ -44,6 +46,7 @@
     <script>
         const sun = document.getElementById('sun');
         const sunContainer = document.getElementById('sun-container');
+        const jumpMessage = document.getElementById('jump-message');
         const positions = [
             { x: 50, y: -100 },
             { x: -50, y: 100 },
@@ -75,7 +78,12 @@
                 "Hore! Asyik! 💃",
                 "Aku bergerak terus! 🤸"
             ];
-            alert(messages[currentPositionIndex]);
+            jumpMessage.textContent = messages[currentPositionIndex];
+            
+            // Clear message after 2 seconds
+            setTimeout(() => {
+                jumpMessage.textContent = '';
+            }, 2000);
         }
 
         // Auto jump every 2 seconds
