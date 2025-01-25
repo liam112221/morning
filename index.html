@@ -2,46 +2,26 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamat Pagi, IJA!</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
-        @keyframes cloudFloat {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100vw); }
+        @keyframes jump {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(50px, -100px) rotate(15deg); }
         }
         body { 
-            touch-action: manipulation; 
-            overflow-x: hidden;
-        }
-        .cloud {
-            position: absolute;
-            font-size: 2rem;
-            animation: cloudFloat linear infinite;
-            opacity: 0.7;
+            overflow: hidden;
         }
     </style>
 </head>
-<body class="bg-gradient-to-b from-blue-300 to-blue-500 min-h-screen flex items-center justify-center relative overflow-hidden p-4">
-    <div id="cloud-container" class="absolute inset-0 pointer-events-none">
-        <div class="cloud" style="top: 5%; animation-duration: 35s;">☁️</div>
-        <div class="cloud" style="top: 15%; animation-duration: 30s; animation-delay: -10s;">☁️</div>
-        <div class="cloud" style="top: 25%; animation-duration: 25s;">☁️</div>
-        <div class="cloud" style="top: 35%; animation-duration: 40s; animation-delay: -15s;">☁️</div>
-        <div class="cloud" style="top: 45%; animation-duration: 28s;">☁️</div>
-        <div class="cloud" style="top: 55%; animation-duration: 33s; animation-delay: -5s;">☁️</div>
-    </div>
-
+<body class="bg-gradient-to-b from-blue-300 to-blue-500 min-h-screen flex items-center justify-center relative p-4">
     <div class="text-center bg-white bg-opacity-90 p-6 rounded-2xl shadow-2xl w-full max-w-xs relative z-10">
-        <div class="mb-4">
-            <div id="sun" class="text-5xl inline-block" style="animation: sunRise 2s ease-out;">🌞</div>
+        <div id="sun-container" class="mb-4 relative h-24 overflow-visible">
+            <div id="sun" class="text-6xl absolute left-1/2 transform -translate-x-1/2 cursor-pointer">🌞</div>
         </div>
         
         <h1 class="text-3xl font-bold text-yellow-600 mb-4">Selamat Pagi, IJA!</h1>
-
-        <div id="heart-container" class="flex justify-center mb-4">
-            <div class="text-4xl cursor-pointer">💗</div>
-        </div>
 
         <p class="text-base text-gray-700 mb-6">
             Pagi ini, pertama yang kupikirkan adalah dirimu. 
@@ -62,6 +42,45 @@
     </div>
 
     <script>
+        const sun = document.getElementById('sun');
+        const sunContainer = document.getElementById('sun-container');
+        const positions = [
+            { x: 50, y: -100 },
+            { x: -50, y: 100 },
+            { x: 100, y: 50 },
+            { x: -100, y: -50 },
+            { x: 75, y: 75 },
+            { x: -75, y: -75 }
+        ];
+        let currentPositionIndex = 0;
+
+        function jumpSun() {
+            // Move to next position
+            currentPositionIndex = (currentPositionIndex + 1) % positions.length;
+            const pos = positions[currentPositionIndex];
+
+            // Animate jump
+            sun.style.animation = 'jump 0.5s ease-in-out';
+            sunContainer.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+
+            // Reset animation after jump
+            setTimeout(() => {
+                sun.style.animation = 'none';
+            }, 500);
+
+            // Funny messages
+            const messages = [
+                "Weee! Aku lompat! 🌞",
+                "Catch me if you can! 😄",
+                "Hore! Asyik! 💃",
+                "Aku bergerak terus! 🤸"
+            ];
+            alert(messages[currentPositionIndex]);
+        }
+
+        // Auto jump every 2 seconds
+        setInterval(jumpSun, 2000);
+
         function revealMessage() {
             const secretMessage = document.getElementById('secret-message');
             secretMessage.classList.remove('hidden');
