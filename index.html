@@ -2,94 +2,71 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Pagi, Sayangku!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Selamat Pagi, IJA!</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
-        @keyframes sunRise {
-            0% { 
-                transform: translateY(100%) rotate(0deg);
-                opacity: 0;
-            }
-            100% { 
-                transform: translateY(0) rotate(360deg);
-                opacity: 1;
-            }
+        @keyframes cloudFloat {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
         }
-        @keyframes rayAnimation {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 0.7; transform: scale(1.2); }
-            100% { opacity: 1; transform: scale(1); }
+        body { 
+            touch-action: manipulation; 
+            overflow-x: hidden;
         }
-        .sun-container {
-            position: relative;
-            display: inline-block;
-        }
-        .sun-ray {
+        .cloud {
             position: absolute;
-            width: 10px;
-            height: 50px;
-            background-color: rgba(255, 255, 0, 0.7);
-            transform-origin: center;
-            animation: rayAnimation 2s infinite alternate;
+            font-size: 2rem;
+            animation: cloudFloat linear infinite;
+            opacity: 0.7;
         }
     </style>
 </head>
-<body class="bg-gradient-to-b from-blue-300 to-blue-500 min-h-screen flex items-center justify-center">
-    <div class="text-center bg-white bg-opacity-90 p-8 rounded-2xl shadow-2xl max-w-md relative overflow-hidden">
-        <div class="sun-container mb-6">
-            <div id="sun" class="text-6xl inline-block sunrise-animation" style="animation: sunRise 2s ease-out;">
-                🌞
-            </div>
+<body class="bg-gradient-to-b from-blue-300 to-blue-500 min-h-screen flex items-center justify-center relative overflow-hidden p-4">
+    <div id="cloud-container" class="absolute inset-0 pointer-events-none">
+        <div class="cloud" style="top: 5%; animation-duration: 35s;">☁️</div>
+        <div class="cloud" style="top: 15%; animation-duration: 30s; animation-delay: -10s;">☁️</div>
+        <div class="cloud" style="top: 25%; animation-duration: 25s;">☁️</div>
+        <div class="cloud" style="top: 35%; animation-duration: 40s; animation-delay: -15s;">☁️</div>
+        <div class="cloud" style="top: 45%; animation-duration: 28s;">☁️</div>
+        <div class="cloud" style="top: 55%; animation-duration: 33s; animation-delay: -5s;">☁️</div>
+    </div>
+
+    <div class="text-center bg-white bg-opacity-90 p-6 rounded-2xl shadow-2xl w-full max-w-xs relative z-10">
+        <div class="mb-4">
+            <div id="sun" class="text-5xl inline-block" style="animation: sunRise 2s ease-out;">🌞</div>
         </div>
         
-        <h1 class="text-4xl font-bold text-yellow-600 mb-4">Selamat Pagi!</h1>
-        
-        <p class="text-lg text-gray-700 mb-6">
+        <h1 class="text-3xl font-bold text-yellow-600 mb-4">Selamat Pagi, IJA!</h1>
+
+        <div id="heart-container" class="flex justify-center mb-4">
+            <div class="text-4xl cursor-pointer">💗</div>
+        </div>
+
+        <p class="text-base text-gray-700 mb-6">
             Pagi ini, pertama yang kupikirkan adalah dirimu. 
-            Semoga harimu cerah dan penuh senyum. 💖
+            Semoga harimu cerah penuh senyum. 💖
         </p>
         
-        <button onclick="showMessage()" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">
+        <button onclick="revealMessage()" class="w-full bg-pink-500 text-white px-4 py-3 rounded-full hover:bg-pink-600 active:bg-pink-700 transition">
             Baca Pesanku
         </button>
         
-        <div id="secretMessage" class="hidden mt-6 bg-pink-50 p-4 rounded-lg">
-            <h2 class="text-xl text-pink-700 mb-3">Untukmu</h2>
-            <p class="text-gray-800">
-                Kamu adalah mentari yang menerangi hariku. 
-                Selamat pagi, cintaku! 💕
+        <div id="secret-message" class="hidden mt-6 bg-pink-50 p-4 rounded-lg">
+            <h2 class="text-xl text-pink-700 mb-3">Khusus Untukmu</h2>
+            <p class="text-gray-800 text-sm">
+                Kamu adalah cahaya yang menerangi hariku. 
+                Setiap pagi ku bersyukur memilikimu. 💕
             </p>
         </div>
     </div>
 
     <script>
-        function createSunRays() {
-            const sunContainer = document.querySelector('.sun-container');
-            const rayCount = 8;
-            const rayRadius = 80;
-
-            for (let i = 0; i < rayCount; i++) {
-                const ray = document.createElement('div');
-                ray.classList.add('sun-ray');
-                
-                const angle = (i / rayCount) * Math.PI * 2;
-                ray.style.left = `calc(50% + ${Math.cos(angle) * rayRadius}px)`;
-                ray.style.top = `calc(50% + ${Math.sin(angle) * rayRadius}px)`;
-                ray.style.transform = `rotate(${angle * 180 / Math.PI}deg)`;
-                ray.style.animationDelay = `${i * 0.2}s`;
-
-                sunContainer.appendChild(ray);
-            }
-        }
-
-        function showMessage() {
-            const secretMessage = document.getElementById('secretMessage');
+        function revealMessage() {
+            const secretMessage = document.getElementById('secret-message');
             secretMessage.classList.remove('hidden');
             secretMessage.style.animation = 'fadeIn 1s';
         }
-
-        createSunRays();
     </script>
 </body>
 </html>
